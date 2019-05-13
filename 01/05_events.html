@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>jQuery - Reprograma</title>
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -13,8 +14,9 @@
 
     <br> Name:
     <input type="text" name="nome">
+    <input type="password" name="senha">
 
-
+    <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
     <script>
         $("p").click(function () {
             alert("p clicado");
@@ -22,8 +24,12 @@
 
         $(document).ready(function () {
             $("input").focus(function () {
-                $(this).css("background-color", "#00a458");
+                $(this).toggleClass('fundoVerde');
             });
+
+            $('input').keyup(function () {
+                alert('digito encontrado');
+            })
         });
 
         // $("p").mouseenter(function() {
