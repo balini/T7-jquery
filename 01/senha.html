@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>jQuery - Reprograma</title>
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -24,7 +25,7 @@
                 var senha = $(this).val();
 
                var forca = 0;
-               console.log("senha: " + senha);
+               
                if (senha.length > 4) {
                    forca = forca + 25; //equivale a escrever forca += 25;
                }
@@ -50,9 +51,22 @@
                    aceito = "Sim";
                }
 
-               $('#forca').html("Força: " + forca + " - Senha: " + senha + " - Aceito: " + aceito);
-            })
+               if (forca >= 75) {
+                $(this).removeClass('fundoVermelho'); //o this refere-se a id senha da linha 24 (pois todo o codigo está dentro do codigo da linha 24)
+                $(this).addClass('fundoVerde');
+               } else {
+                $(this).removeClass('fundoVerde');
+                $(this).addClass('fundoVermelho');
+               }
+
+               //Outra resoluçao:
+               //aceito = (forca >= 75);
+               //$(this).toggleClass('fundoVerde', aceito);
+               //$(this).toggleClass('fundoVermelho', !aceito);
+
+            $('#forca').html("Força: " + forca + " - Senha: " + senha + " - Aceito: " + aceito);
         });
+    });
 
     </script>
 </body>
