@@ -191,3 +191,16 @@ $('html, body').animate({
 });
 ```
 
+## Aula 3
+
+#### AJAX 
+AJAX = Asynchronous JavaScript And XML
+Javascript e XML assincronos.
+É uma combinação de várias tecnologias para facilitar a comunicação entre o client e o server, fazendo com que seja possível
+- Trazer dados sem recarregar páginas.
+- Enviar dados sem interromper o funcionamento de outras funcionalidades.
+- Fazer requisições http de forma paralela sem interromper o funcionamento.
+
+O XML presente na descrição do nome pode causar alguns enganos, mesmo que o AJAX consiga utilizar XML, também é comum utilizarmos JSON(Javascript Object Notation)
+
+Utilizaremos o AJAX para consultar arquivos, fazer requisições em servidores externos para coletar e enviar informações e consumiremos APIs ( Application Programming Interface).
