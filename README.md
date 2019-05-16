@@ -5,16 +5,20 @@ Turma 7 | Front-end | 2019 | Semana 10 | jQuery
 
 ---
 
-### [Aula 1](#aula-01)
+### [Aula 1](#aula-1)
 #### Resumo: 
 Nessa aula veremos alguns exercícios utilizando jQuery com comparação do javascript puro.
-* [O que é ?](#o-que-é-jquery)
+* [O que é ?](#o-que-é-jquery-?)
 * [Como surgiu ?](#como-surgiu-?)
 * [Vantagens](#vantagens)
 * [Como utilizar](#como-utilizar-?)
 * [Sintaxe](#sintaxe)
 * [Exercícios](#exercícios)
 * [Conteúdos adicionais](#conteúdos-adicionais)
+
+### [Aula 2](#aula-2)
+Nessa aula fizemos exercícios com conceitos aprendidos na aula anterior e aprendemos conceitos de animate.
+* [Animate](#animate)
 
 
 ## Aula 1
@@ -155,5 +159,128 @@ $('#div3').fadeToggle(2000);
 [RegEx - Livro](https://aurelio.net/regex/guia/)
 
 
+## Aula 2
 
+#### Animate
+Vimos o [animate](http://api.jquery.com/animate/) que segue o modelo 
 
+```
+$('elemento').animate();
+```
+
+Exemplo:
+```
+$('#animate').click(function(){
+    $('#content').animate(
+        { "width": "60%", "height": "200px"},
+        1000,
+        function(){
+            $(this).html("ANIMAÇÃO TERMINOU");
+        });
+});
+```
+
+Também utilizando scrollTop e offset:
+
+```
+$('html, body').animate({
+    scrollTop: $(hash).offset().top
+}, 3000, function(){
+    //Coloca na url do navegador
+    window.location.hash = hash;
+});
+```
+
+## Aula 3
+
+#### AJAX 
+AJAX = Asynchronous JavaScript And XML
+Javascript e XML assincronos.
+É uma combinação de várias tecnologias para facilitar a comunicação entre o client e o server, fazendo com que seja possível
+- Trazer dados sem recarregar páginas.
+- Enviar dados sem interromper o funcionamento de outras funcionalidades.
+- Fazer requisições http de forma paralela sem interromper o funcionamento.
+
+O XML presente na descrição do nome pode causar alguns enganos, mesmo que o AJAX consiga utilizar XML, também é comum utilizarmos JSON(Javascript Object Notation)
+
+Utilizaremos o AJAX para consultar arquivos, fazer requisições em servidores externos para coletar e enviar informações e consumiremos APIs ( Application Programming Interface).
+
+Com os exercícios vimos a forma de fazer uma requisição http utilizando javascript puro(Exercício requisicao-javascript), consumindo a API https://jsonplaceholder.typicode.com/photos e outro utilizando jQuery(Exercício requisicao-jquery), consumindo a mesma API. Com isso passamos pelos seguintes conceitos:
+
+- Como utilizar AJAX nas requisições entre cliente e servidor:
+
+![Imagem explicativa de como ocorre o consumo de uma API](/imgs/comunicacao-ajax-API.jpeg)
+
+- Métodos de API e HTTP Status Code:
+
+Método | O que faz        | Status de retorno |
+-------|------------------|-------------------|
+GET    | Traz informações | 200               |
+POST   | Cria um novo item| 201               |
+PUT    | Atualiza um item | 200               |
+DELETE | Remove um item   | 200               |
+
+Podemos encontrar mais sobre http status code [aqui](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status)
+
+E também utilizamos o https://http.cat/ que é um site que retorna imagens de gatos para ilustrar os status.
+
+![Vamo lá](https://http.cat/100)
+
+Ao utilizar o jQuery para consumir uma API, usamos o [$.ajax](http://api.jquery.com/jquery.ajax/):
+```
+$(document).ready(function(){
+    $.ajax({
+        url: "https://jsonplaceholder.typicode.com/photosdhsau",
+        type: "GET",
+        success: function(photos){
+            $(photos).each(function(){
+                let container = $("<div>");
+                container.attr("class", `photo${this.id}`);
+                let photoTitle = $("<h2>").text(this.title);
+                let photoImg = $("<img>").attr("src", this.url);
+
+                container.append(photoTitle);
+                container.append(photoImg);
+
+                $('#root').append(container);
+
+            });
+        },
+        error: function(req){
+            let errorImage = $("<img>").attr("src", `https://http.cat/${req.status}`);
+            $("#root").append(errorImage);
+
+        }
+    })
+
+});
+
+```
+É uma função do jQuery que nos permite enviar, receber e tratar resultados de requisições assíncronas(ajax).
+
+Também fizemos um exercício de expor informações de um arquivo .json(JSON - javascript object notation - é um formato leve para troca de informações entre sistemas) utilizando
+[$.getJSON](https://api.jquery.com/jQuery.getJSON/#jQuery-getJSON-url-data-success) :
+
+```
+function carregaCarta(){
+    $.getJSON("tarot.json", trocaCartaAleatoria);
+}
+function trocaCartaAleatoria(cartas, status){
+    if(status == 'success'){
+            
+        let numeroAleatorio = Math.floor(Math.random() * cartas.length);
+        $(".titulo").text(cartas[numeroAleatorio].nome);
+        $(".tipo").text(cartas[numeroAleatorio].tipo);
+        $(".descricao").text(cartas[numeroAleatorio].descricao);
+        $('.image').attr("src", cartas[numeroAleatorio].imagem);
+        $('.saiba-mais').attr("href", cartas[numeroAleatorio].link);
+        
+    }else{
+        $('.mensagem').text("Não foi possível carregar a carta");
+    }
+}
+$(document).ready(function(){
+    carregaCarta();
+    $('#novaCarta').click(carregaCarta);
+});
+```
